@@ -1,16 +1,16 @@
 package com.company;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AddProduct {
     public static void main(String[] args) throws IOException {
-        Product p = new Product();
-        p.name = "сметана";
-        p.price = 50;
-        p.count = 20;
-        System.out.println(p.toString());
-        addProduct(p);
+        Product p = new Product(1, "сметана", 50, 20);
+        p.setPrice(-70);
+        System.out.println(Arrays.toString(getAllFromFile()));
+//        System.out.println(p.toString());
+//        addProduct(p);
 
     }
 
@@ -19,12 +19,13 @@ public class AddProduct {
         BufferedWriter writer = new BufferedWriter(
                 new FileWriter(f, true));
         writer.newLine();
-        writer.write((productsCount() + 1) + " " + p.name + " " + p.price + " " + p.count);
+        writer.write((productsCount() + 1) + " " + p.name + " " + p.getPrice() + " " + p.count);
         writer.close();
 
     }
 
     static int productsCount() throws FileNotFoundException {
+        String s = "https://github.com/SZabirov/ITIS_STORM_2018";
         File f = new File("products.txt");
         Scanner sc = new Scanner(f);
         int count = 0;
@@ -43,11 +44,7 @@ public class AddProduct {
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             String[] elems = line.split(" ");
-            Product p = new Product();
-            p.id = Integer.valueOf(elems[0]);
-            p.name = elems[1];
-            p.price = Integer.valueOf(elems[2]);
-            p.count = Integer.valueOf(elems[3]);
+            Product p = new Product(Integer.valueOf(elems[0]), elems[1], Integer.valueOf(elems[2]), Integer.valueOf(elems[3]));
             products[i] = p;
             i++;
         }
