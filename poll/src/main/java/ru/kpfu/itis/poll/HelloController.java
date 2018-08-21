@@ -1,6 +1,7 @@
 package ru.kpfu.itis.poll;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
@@ -9,14 +10,20 @@ import java.sql.SQLException;
 @RestController
 public class HelloController {
     PollDao pollDao;
+    OptionDao optionDao;
 
     public HelloController() throws SQLException, ClassNotFoundException {
         pollDao = new PollDaoImpl();
     }
 
-    @RequestMapping("/poll1")
-    public String poll1() throws SQLException {
-        return pollDao.getById(1).toString();
+    @RequestMapping("/poll")
+    public String poll(@RequestParam int id) throws SQLException {
+        return pollDao.getById(id).toString();
+    }
+
+    @RequestMapping("/polls")
+    public String polls() throws SQLException {
+        return pollDao.getAll().toString();
     }
 
 
@@ -30,5 +37,8 @@ public class HelloController {
         return "hello";
     }
 
-
+    @RequestMapping("/options")
+    public String options(@RequestParam int pollId) {
+        return optionDao.getAllByPollId(pollId).toString();
+    }
 }
