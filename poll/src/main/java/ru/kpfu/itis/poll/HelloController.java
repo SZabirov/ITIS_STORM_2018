@@ -14,6 +14,7 @@ public class HelloController {
 
     public HelloController() throws SQLException, ClassNotFoundException {
         pollDao = new PollDaoImpl();
+        optionDao = new OptionDaoImpl();
     }
 
     @RequestMapping("/poll")
@@ -38,7 +39,7 @@ public class HelloController {
     }
 
     @RequestMapping("/options")
-    public String options(@RequestParam int pollId) {
+    public String options(@RequestParam int pollId) throws SQLException {
         return optionDao.getAllByPollId(pollId).toString();
     }
 }

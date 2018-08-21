@@ -47,4 +47,14 @@ public class Option {
     public void setVotesCount(int votesCount) {
         this.votesCount = votesCount;
     }
+
+    @Override
+    public String toString() {
+        return "Option{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", pollId=" + pollId +
+                ", votesCount=" + votesCount +
+                '}';
+    }
 }
