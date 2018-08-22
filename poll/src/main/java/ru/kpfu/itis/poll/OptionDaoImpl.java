@@ -17,7 +17,7 @@ public class OptionDaoImpl implements OptionDao {
     @Override
     public ArrayList<Option> getAllByPollId(int pollId) throws SQLException {
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM option");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM option WHERE poll_id = " + pollId);
         ArrayList<Option> options = new ArrayList<Option>();
         while (rs.next()) {
             Option p = new Option(rs.getInt("id"), rs.getString("text"), rs.getInt("poll_id"), rs.getInt("votes_count"));

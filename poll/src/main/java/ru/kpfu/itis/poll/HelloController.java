@@ -1,13 +1,13 @@
 package ru.kpfu.itis.poll;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 
-
-@RestController
+@Controller
 public class HelloController {
     PollDao pollDao;
     OptionDao optionDao;
@@ -22,9 +22,10 @@ public class HelloController {
         return pollDao.getById(id).toString();
     }
 
-    @RequestMapping("/polls")
-    public String polls() throws SQLException {
-        return pollDao.getAll().toString();
+    @RequestMapping("/allpolls")
+    public String polls(Model model) throws SQLException {
+        model.addAttribute("pollList", pollDao.getAll());
+        return "polls";
     }
 
 
@@ -39,7 +40,15 @@ public class HelloController {
     }
 
     @RequestMapping("/options")
-    public String options(@RequestParam int pollId) throws SQLException {
-        return optionDao.getAllByPollId(pollId).toString();
+    public String options(Model model, @RequestParam int pollId) throws SQLException {
+        model.addAttribute("optionList", optionDao.getAllByPollId(pollId));
+        return "option";
+    }
+
+
+    @RequestMapping("/cost")
+    public String cost(Model model, @RequestParam int intext) {
+        System.out.println(intext);
+        return "option";
     }
 }
